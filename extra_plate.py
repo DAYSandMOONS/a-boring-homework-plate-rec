@@ -64,7 +64,7 @@ plates = find_plate('car.png')
 for index, plate in enumerate(plates):
     content = pytesseract.image_to_string(
         Image.fromarray(plate), lang='chi_sim')
-    cv2.imshow('plate-%d' % index, plate)
-    print(content)
+    cv2.imshow('plate-%d :%s' % (index, content), plate)
+    print('plate-%d :%s' % (index, content))
 cv2.waitKey(0)
 cv2.destroyAllWindows()
