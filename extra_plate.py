@@ -1,7 +1,10 @@
 import cv2
-import pytesseract
+# import pytesseract
 from PIL import Image
+import paddlehub as hub
+import json
 
+ocr = hub.Module(name="chinese_ocr_db_crnn_server")
 
 def find_plate(path_to_image):
 
@@ -33,7 +36,7 @@ def find_plate(path_to_image):
     # 平滑处理，中值滤波
     image = cv2.medianBlur(image, 15)
     # 查找轮廓
-    tmp, contours, w1 = cv2.findContours(
+    contours, w1 = cv2.findContours(
         image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     plates = []
     for item in contours:
@@ -62,8 +65,9 @@ def find_plate(path_to_image):
 
 plates = find_plate('car.png')
 for index, plate in enumerate(plates):
-    content = pytesseract.image_to_string(
-        Image.fromarray(plate), lang='chi_sim')
+    # content = pytesseract.image_to_string(
+    #     Image.fromarray(plate), lang='chi_sim')
+    content = (ocr.recognize_text(images=[plate])[0])['data'][0]['text']
     cv2.imshow('plate-%d :%s' % (index, content), plate)
     print('plate-%d :%s' % (index, content))
 cv2.waitKey(0)
