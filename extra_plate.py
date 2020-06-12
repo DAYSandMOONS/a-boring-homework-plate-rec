@@ -6,6 +6,7 @@ import json
 
 ocr = hub.Module(name="chinese_ocr_db_crnn_server")
 
+
 def find_plate(path_to_image):
 
     # 读取图片
