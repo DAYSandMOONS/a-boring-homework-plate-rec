@@ -1,8 +1,8 @@
 import cv2
 # import pytesseract
-from PIL import Image
+# from PIL import Image
 import paddlehub as hub
-import json
+# import json
 
 ocr = hub.Module(name="chinese_ocr_db_crnn_server")
 
